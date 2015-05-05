@@ -1,0 +1,20 @@
+RewriteEngine On
+RewriteBase /
+
+#Live Environment
+RewriteCond %{HTTP_HOST} ^ibdlighthouse\.com$
+RewriteCond  %{REQUEST_FILENAME} !-f
+RewriteCond  %{REQUEST_FILENAME} !-d
+RewriteRule  ^(.*)$ https://ibdlighthouse.com/?a=$1/ [QSA,R=301,L]
+
+#Public Dev Environment
+RewriteCond %{HTTP_HOST} ^dev\.ibdlighthouse\.com$
+RewriteCond  %{REQUEST_FILENAME} !-f
+RewriteCond  %{REQUEST_FILENAME} !-d
+RewriteRule  ^(.*)$ http://dev.ibdlighthouse.com/?a=$1/ [QSA,R=301,L]
+
+#Local Dev Environment
+RewriteCond %{HTTP_HOST} ^local\.ibdlighthouse\.com$
+RewriteCond  %{REQUEST_FILENAME} !-f
+RewriteCond  %{REQUEST_FILENAME} !-d
+RewriteRule  ^(.*)$ http://local.ibdlighthouse.com/?a=$1/ [QSA,R=301,L]
