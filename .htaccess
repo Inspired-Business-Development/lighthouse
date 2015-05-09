@@ -1,20 +1,44 @@
 RewriteEngine On
 RewriteBase /
 
-#Live Environment
-RewriteCond %{HTTP_HOST} ^ibdlighthouse\.com$
+## Live Environment ##
+#Force Non-www URL
+RewriteCond %{HTTP_HOST} ^www\.ibdlighthouse\.com [NC]
+RewriteRule (.*) http://ibdlighthouse.com/$1 [R=301,L]
+#Force Trailing Slash
+RewriteCond %{HTTP_HOST} ^ibdlighthouse\.com$ [NC]
 RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteCond  %{REQUEST_FILENAME} !-d
-RewriteRule  ^(.*)$ https://ibdlighthouse.com/?a=$1/ [QSA,R=301,L]
+RewriteCond %{REQUEST_URI} ^(.*)[^/]$ [NC]
+RewriteRule  ^(.*)$ https://ibdlighthouse.com/$1/ [QSA,R=301,L]
+#Write Action Path
+RewriteCond %{HTTP_HOST} ^ibdlighthouse\.com$ [NC]
+RewriteCond  %{REQUEST_FILENAME} !-f
+RewriteCond  %{REQUEST_FILENAME} !-d
+RewriteRule  ^(.*)$ https://ibdlighthouse.com/?a=$1 [QSA,R=301,L]
 
-#Public Dev Environment
-RewriteCond %{HTTP_HOST} ^dev\.ibdlighthouse\.com$
+## Public Dev Environment ##
+#Force Trailing Slash
+RewriteCond %{HTTP_HOST} ^dev\.ibdlighthouse\.com$ [NC]
 RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteCond  %{REQUEST_FILENAME} !-d
-RewriteRule  ^(.*)$ http://dev.ibdlighthouse.com/?a=$1/ [QSA,R=301,L]
+RewriteCond %{REQUEST_URI} ^(.*)[^/]$ [NC]
+RewriteRule  ^(.*)$ http://dev.ibdlighthouse.com/$1/ [QSA,R=301,L]
+#Write Action Path
+RewriteCond %{HTTP_HOST} ^dev\.ibdlighthouse\.com$ [NC]
+RewriteCond  %{REQUEST_FILENAME} !-f
+RewriteCond  %{REQUEST_FILENAME} !-d
+RewriteRule  ^(.*)$ http://dev.ibdlighthouse.com/?a=$1 [QSA,R=301,L]
 
-#Local Dev Environment
-RewriteCond %{HTTP_HOST} ^local\.ibdlighthouse\.com$
+## Local Dev Environment ##
+#Force Trailing Slash
+RewriteCond %{HTTP_HOST} ^local\.ibdlighthouse\.com$ [NC]
 RewriteCond  %{REQUEST_FILENAME} !-f
 RewriteCond  %{REQUEST_FILENAME} !-d
-RewriteRule  ^(.*)$ http://local.ibdlighthouse.com/?a=$1/ [QSA,R=301,L]
+RewriteCond %{REQUEST_URI} ^(.*)[^/]$ [NC]
+RewriteRule  ^(.*)$ http://local.ibdlighthouse.com/$1/ [QSA,R=301,L]
+#Write Action Path
+RewriteCond %{HTTP_HOST} ^local\.ibdlighthouse\.com$ [NC]
+RewriteCond  %{REQUEST_FILENAME} !-f
+RewriteCond  %{REQUEST_FILENAME} !-d
+RewriteRule  ^(.*)$ http://local.ibdlighthouse.com/?a=$1 [QSA,R=301,L]

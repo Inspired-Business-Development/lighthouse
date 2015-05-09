@@ -52,7 +52,11 @@ public function connect($db_selection){self::disconnect();
                 $pwd=$this->local_mode_pwd;
             break;
         default:die('Permission Denied');}
-        try{$this->PDO=new PDO($dsn,$usn,$pwd);$this->is_connected=true;}catch(PDOException $e){$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);$e_msg=$e->getMessage();die('Database Connection Error: '.$e_msg);}
+        try{$this->PDO=new PDO($dsn,$usn,$pwd);$this->is_connected=true;}
+        catch(PDOException $e){
+            $this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $e_msg=$e->getMessage();die('Database Connection Error: '.$e_msg);
+        }
     }else{die('FATAL ERROR -> DBO::CONNECT - "Invalid Database Selection"');}
 }
 public function disconnect(){if($this->is_connected){$this->PDO=null;$this->is_connected=false;}}
@@ -73,13 +77,14 @@ public function __construct(){$this->is_connected=false;/* START CONSTRUCT METHO
 
     // Build Database Directory & Configuration Array
     $this->db_dir=array( //START Build db_dir Array
-        //Lighthouse User Session DB
-        "ibdlhsession"=>array(
-            "LIVE_DSN"=>"mysql:host=localhost;dbname=ibdlhsession",
-            "DEV_DSN"=>"mysql:host=localhost;dbname=dev_ibdlhsession",
-            "LOCAL_DSN"=>"mysql:host=localhost;dbname=ibdlhsession",
+        
+        //Lighthouse App:: HPA Reports - DC Form Submission Database
+        "ibdapp_hpadcform"=>array(
+            "LIVE_DSN"=>"mysql:host=localhost;dbname=hpadcform",
+            "DEV_DSN"=>"mysql:host=localhost;dbname=dev_hpadcform",
+            "LOCAL_DSN"=>"mysql:host=localhost;dbname=hpadcform",
         ),
-
+        
         //Lighthouse CORE DB
         "ibdlighthouse"=>array(
             "LIVE_DSN"=>"mysql:host=localhost;dbname=ibdlighthouse",
@@ -87,12 +92,21 @@ public function __construct(){$this->is_connected=false;/* START CONSTRUCT METHO
             "LOCAL_DSN"=>"mysql:host=localhost;dbname=ibdlighthouse",
         ),
 
-        //HPA Reports - DC Form Submission Database
-        "ibdapp_hpadcform"=>array(
-            "LIVE_DSN"=>"mysql:host=localhost;dbname=hpadcform",
-            "DEV_DSN"=>"mysql:host=localhost;dbname=dev_hpadcform",
-            "LOCAL_DSN"=>"mysql:host=localhost;dbname=hpadcform",
+        //Lighthouse PostDefender DB
+        "ibdpostdef"=>array(
+            "LIVE_DSN"=>"mysql:host=localhost;dbname=ibdpostdef",
+            "DEV_DSN"=>"mysql:host=localhost;dbname=dev_ibdpostdef",
+            "LOCAL_DSN"=>"mysql:host=localhost;dbname=ibdpostdef",
         ),
+        
+        //Lighthouse User Session DB
+        "ibdlhsession"=>array(
+            "LIVE_DSN"=>"mysql:host=localhost;dbname=ibdlhsession",
+            "DEV_DSN"=>"mysql:host=localhost;dbname=dev_ibdlhsession",
+            "LOCAL_DSN"=>"mysql:host=localhost;dbname=ibdlhsession",
+        ),
+
+        
 
     ); //[END Build db_dir Array]
 }/* [END CONSTRUCT METHOD DEFINITION] */}?>
